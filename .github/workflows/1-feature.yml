@@ -1,0 +1,27 @@
+name: 1-feature
+
+on:
+  push:
+    branches:
+      - feat**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore src/app/JwtValidator.csproj
+
+      - name: Build application
+        run: dotnet build src/app/JwtValidator.csproj --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test src/app/JwtValidator.csproj --no-build --verbosity normal
