@@ -2,7 +2,7 @@
 resource "aws_security_group" "ecs_security_group" {
   name        = "ecs-security-group"
   description = "Allow HTTP traffic"
-  vpc_id      = aws_vpc.main_vpc.id
+  vpc_id      = var.main_vpc
 
   ingress {
     from_port   = 80
