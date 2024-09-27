@@ -46,6 +46,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
   
       - name: Build Docker image
+        working-directory: ./src 
         run: |
           docker build -t authcloud:latest .
           $(aws ecr get-login-password --region ${{ secrets.AWS_REGION }}) | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
