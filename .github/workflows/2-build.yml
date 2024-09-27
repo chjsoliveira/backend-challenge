@@ -47,7 +47,7 @@ jobs:
   
       - name: Build Docker image
         run: |
-          docker build -t authcloud:latest .
+          docker build -t authcloud:latest -f src/Dockerfile .
           $(aws ecr get-login-password --region ${{ secrets.AWS_REGION }}) | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           docker tag authcloud:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
   
