@@ -1,6 +1,0 @@
-@Auth.Cloud_HostAddress = http://localhost:5019
-
-GET {{Auth.Cloud_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

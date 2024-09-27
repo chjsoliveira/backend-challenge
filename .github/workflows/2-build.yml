@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and Package .NET
+    name: Build and Package .NET Lambda
     runs-on: ubuntu-latest
 
     steps:
@@ -20,13 +20,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore Dependencies
-      run: dotnet restore 
+      run: dotnet restore src/app/AuthCloud.csproj
 
     - name: Build Application
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build src/app/AuthCloud.csproj --configuration Release --no-restore
 
     - name: Run Unit Tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      run: dotnet test src/unit-tests/AuthCloud.UnitTests.csproj --configuration Release --no-build --verbosity normal
 
 
   # Job para criar imagem Docker e fazer Push no ECR

@@ -18,10 +18,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore src/app/JwtValidator.csproj
+        run: dotnet restore src/app/AuthCloud.csproj
 
       - name: Build application
-        run: dotnet build src/app/JwtValidator.csproj --configuration Release --no-restore
+        run: dotnet build src/app/AuthCloud.csproj --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test src/app/JwtValidator.csproj --no-build --verbosity normal
+        run: dotnet test src/app/AuthCloud.csproj --no-build --verbosity normal
