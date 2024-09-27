@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: 097733790606.dkr.ecr.us-eat-1.amazonaws.com/auth-cloud
+  repository: 097733790606.dkr.ecr.us-eat-1.amazonaws.com/AuthCloud
   tag: "latest"
 
 service:
