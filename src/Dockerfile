@@ -15,5 +15,5 @@ RUN dotnet publish app -c Release -o out
 # Usar a imagem base do .NET Runtime para executar a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "authcloud.dll"]
