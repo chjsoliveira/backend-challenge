@@ -20,13 +20,13 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore Dependencies
-      run: dotnet restore src/app/AuthCloud.csproj
+      run: dotnet restore src/app/authcloud.csproj
 
     - name: Build Application
-      run: dotnet build src/app/AuthCloud.csproj --configuration Release --no-restore
+      run: dotnet build src/app/authcloud.csproj --configuration Release --no-restore
 
     - name: Run Unit Tests
-      run: dotnet test src/unit-tests/AuthCloud.UnitTests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test src/unit-tests/authcloud.UnitTests.csproj --configuration Release --no-build --verbosity normal
 
 
   # Job para criar imagem Docker e fazer Push no ECR
@@ -47,11 +47,11 @@ jobs:
   
       - name: Build Docker image
         run: |
-          docker build -t AuthCloud:latest .
+          docker build -t authcloud:latest .
           $(aws ecr get-login-password --region ${{ secrets.AWS_REGION }}) | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          docker tag AuthCloud:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/AuthCloud:latest
+          docker tag authcloud:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
   
       - name: Push Docker image to ECR
         run: |
-          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/AuthCloud:latest
+          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
   

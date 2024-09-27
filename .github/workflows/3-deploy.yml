@@ -26,11 +26,11 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        working-directory: infra
+        working-directory: infra/terraform
         run: terraform init
 
       - name: Terraform Plan
-        working-directory: infra
+        working-directory: infra/terraform
         run: terraform plan
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -38,7 +38,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           
       - name: Terraform Apply
-        working-directory: infra
+        working-directory: infra/terraform
         run: terraform apply -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -69,7 +69,7 @@ jobs:
           sudo mv kubectl /usr/local/bin/
 
       - name: Update kubeconfig (apenas para EKS)
-        run: aws eks update-kubeconfig --name AuthCloud-eks --region ${{ secrets.AWS_REGION }}
+        run: aws eks update-kubeconfig --name authcloud-eks --region ${{ secrets.AWS_REGION }}
 
       - name: Install Helm (EKS)
         run: |
@@ -77,4 +77,4 @@ jobs:
 
       - name: Deploy application using Helm (EKS)
         run: |
-          helm upgrade --install AuthCloud ./helm/AuthCloud-chart --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/AuthCloud --set image.tag=latest
+          helm upgrade --install authcloud ./helm/authcloud-chart --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud --set image.tag=latest
