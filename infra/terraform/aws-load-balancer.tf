@@ -1,19 +1,19 @@
 # Load Balancer para expor o serviço
 resource "aws_lb" "auth_cloud_lb" {
-  name               = "AuthCloud-lb"
+  name               = "authcloud-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_security_group.id]
   subnets            = [aws_subnet.public_subnet.id]
 
   tags = {
-    Name = "AuthCloud-lb"
+    Name = "authcloud-lb"
   }
 }
 
 # Target Group para o LB
 resource "aws_lb_target_group" "auth_cloud_tg" {
-  name     = "AuthCloud-tg"
+  name     = "authcloud-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main_vpc.id

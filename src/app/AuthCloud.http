@@ -1,6 +1,0 @@
-@AuthCloud_HostAddress = http://localhost:5088
-
-GET {{AuthCloud_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
