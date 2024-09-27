@@ -1,4 +1,4 @@
-name: Deploy Terraform Infrastructure
+name: 3-Deploy Terraform Infrastructure and EKS
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
 jobs:
   # Job para fazer o Deploy da Infraestrutura com Terraform
   terraform:
-    name: Deploy Infrastructure
+    name: 3.1-Deploy Infrastructure
     runs-on: ubuntu-latest
 
     steps:
@@ -61,7 +61,7 @@ jobs:
 
   # Job para fazer o Deploy no EKS com Helm
   deploy:
-    name: Deploy Docker
+    name: 3.2-Deploy Docker
     runs-on: ubuntu-latest
     needs: terraform
 

@@ -1,4 +1,4 @@
-name: Build .NET 
+name: 2-Build .NET and Docker
 
 on:
   push:
