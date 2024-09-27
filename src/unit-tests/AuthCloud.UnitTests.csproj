@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\app\AuthCloud.csproj" />
+    <ProjectReference Include="..\app\authcloud.csproj" />
   </ItemGroup>
 
 </Project>
