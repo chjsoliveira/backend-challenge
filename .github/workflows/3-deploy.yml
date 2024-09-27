@@ -54,7 +54,7 @@ jobs:
           mv kubectl /usr/local/bin/
 
       - name: Update kubeconfig (apenas para EKS)
-        run: aws eks update-kubeconfig --name jwt-validator-eks --region ${{ secrets.AWS_REGION }}
+        run: aws eks update-kubeconfig --name auth-cloud-eks --region ${{ secrets.AWS_REGION }}
 
       - name: Install Helm (EKS)
         run: |
@@ -62,5 +62,5 @@ jobs:
 
       - name: Deploy application using Helm (EKS)
         run: |
-          helm upgrade --install jwt-validator ./helm/jwt-validator-chart --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/jwt-validator --set image.tag=latest
+          helm upgrade --install auth-cloud ./helm/auth-cloud-chart --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/auth-cloud --set image.tag=latest
 
