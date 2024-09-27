@@ -1,22 +1,19 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# Usar a imagem base do .NET SDK para compilar a aplicação
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+# Copiar o arquivo de projeto e restaurar dependências
+COPY *.sln ./
+COPY app/*.csproj ./app/
+RUN dotnet restore
 
-COPY ["app/authcloud.csproj", "app/"]
-RUN dotnet restore "app/authcloud.csproj"
-
+# Copiar o restante do código e compilar a aplicação
 COPY . .
+RUN dotnet publish app -c Release -o out
 
-WORKDIR "/src/app"
-RUN dotnet build "authcloud.csproj" -c Release -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "authcloud.csproj" -c Release -o /app/publish
-
-FROM base AS final
+# Usar a imagem base do .NET Runtime para executar a aplicação
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "authcloud.dll"]
