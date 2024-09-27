@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and Package .NET 
+    name: 2.1-Build .NET 
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +31,7 @@ jobs:
 
   # Job para criar imagem Docker e fazer Push no ECR
   docker:
+    name: 2.2-Build Docker 
     runs-on: ubuntu-latest
     needs: build
   
@@ -48,11 +49,15 @@ jobs:
       - name: Build Docker image
         working-directory: ./src 
         run: |
+          # Build the Docker image
           docker build -t authcloud:latest .
-          $(aws ecr get-login-password --region ${{ secrets.AWS_REGION }}) | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-          docker tag authcloud:latest ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
+          
+          # Login to ECR
+          $(aws ecr get-login-password --region ${{ secrets.AWS_REGION }}) | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+          # Tag the Docker image
+          docker tag authcloud:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
   
       - name: Push Docker image to ECR
         run: |
-          docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud:latest
   

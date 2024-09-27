@@ -92,4 +92,4 @@ jobs:
       - name: Deploy application using Helm (EKS)
         if: ${{ github.event.inputs.destroy == 'false' }}  # Adicionando verificação para não executar se destroy for true
         run: |
-          helm upgrade --install authcloud ./helm/authcloud-chart --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud --set image.tag=latest
+          helm upgrade --install authcloud ./helm/authcloud-chart --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud --set image.tag=latest
