@@ -4,7 +4,7 @@ resource "aws_lb" "auth_cloud_lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_security_group.id]
-  subnets            = [aws_subnet.public_subnet.id]
+  subnets            = var.public_subnets
 
   tags = {
     Name = "authcloud-lb"

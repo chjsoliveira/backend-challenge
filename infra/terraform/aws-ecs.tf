@@ -43,7 +43,7 @@ resource "aws_ecs_service" "auth_cloud_service" {
   launch_type     = "FARGATE"
   
   network_configuration {
-    subnets         = [aws_subnet.public_subnet.id]
+    subnets         = var.public_subnets
     security_groups = [aws_security_group.ecs_security_group.id]
     assign_public_ip = true
   }
