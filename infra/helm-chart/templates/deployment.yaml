@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-cloud
+  name: AuthCloud
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: auth-cloud
+      app: AuthCloud
   template:
     metadata:
       labels:
-        app: auth-cloud
+        app: AuthCloud
     spec:
       containers:
-      - name: auth-cloud
+      - name: AuthCloud
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: 80
@@ -28,10 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-cloud
+  name: AuthCloud
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
   selector:
-    app: auth-cloud
+    app: AuthCloud

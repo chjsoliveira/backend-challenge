@@ -4,9 +4,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["app/AuthCloud.csproj", "AuthCloud/"]
+
+COPY ["app/AuthCloud.csproj", "app/"]
 RUN dotnet restore "app/AuthCloud.csproj"
+
 COPY . .
+
 WORKDIR "/src/app"
 RUN dotnet build "AuthCloud.csproj" -c Release -o /app/build
 
