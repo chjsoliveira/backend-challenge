@@ -6,6 +6,7 @@ EXPOSE 80
 # Copiar o arquivo de projeto e restaurar dependências
 COPY *.sln ./
 COPY app/*.csproj ./app/
+COPY unit-tests/*.csproj ./app/unit-tests/
 RUN dotnet restore "app/authcloud.csproj"
 
 # Copiar o restante do código e compilar a aplicação
