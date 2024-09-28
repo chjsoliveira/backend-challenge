@@ -26,8 +26,6 @@ resource "aws_lb_target_group" "authcloud_tg" {
     timeout             = 5
     healthy_threshold  = 5
     unhealthy_threshold = 2
-    port                = "80"
-    protocol            = "HTTP"
   }
 
   tags = {
@@ -43,12 +41,6 @@ resource "aws_lb_listener" "authcloud_listener" {
 
   default_action {
     type = "forward"
-
-    forward {
-      target_group {
-        target_group_arn = aws_lb_target_group.authcloud_tg.arn
-        weight           = 1
-      }
-    }
+    target_group_arn = "${aws_lb_target_group.authcloud_tg.arn}"
   }
 }
