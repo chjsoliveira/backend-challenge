@@ -1,13 +1,13 @@
-﻿# backend-challenge
+﻿# AuthCloud
 
 Este projeto contém a aplicação **authcloud**, focada em expor uma api web que recebe por parametros um JWT (string) e verifica se é valida conforme regras abaixo:
 
-Deve ser um JWT válido
-Deve conter apenas 3 claims (Name, Role e Seed)
-A claim Name não pode ter carácter de números
-A claim Role deve conter apenas 1 dos três valores (Admin, Member e External)
-A claim Seed deve ser um número primo.
-O tamanho máximo da claim Name é de 256 caracteres.
+- Deve ser um JWT válido
+- Deve conter apenas 3 claims (Name, Role e Seed)
+- A claim Name não pode ter carácter de números
+- A claim Role deve conter apenas 1 dos três valores (Admin, Member e External)
+- A claim Seed deve ser um número primo.
+- O tamanho máximo da claim Name é de 256 caracteres.
 
 ## Instalação
 
@@ -30,6 +30,33 @@ O tamanho máximo da claim Name é de 256 caracteres.
    ```bash
    dotnet build
    ```
+   
+## Uso
+
+Execute a aplicação localmente:
+
+```bash
+dotnet run --project src/app/authcloud.csproj
+```
+
+A API estará disponível em `http://localhost:5088`.
+
+## Documentação dos Endpoints
+
+Para detalhes sobre os endpoints da API, consulte o [README dos Endpoints](docs/endpoints.md).
+
+## Testes
+
+Para rodar os testes unitários:
+
+```bash
+dotnet test src/unit-tests/authcloud.UnitTests.csproj
+```
+
+## Infraestrutura
+
+- **Helm**: Use o chart localizado em `infra/helm-chart` para o deploy no Kubernetes.
+- **Terraform**: Os scripts de infraestrutura do Terraform estão em `infra/terraform`. Certifique-se de configurar as variáveis em `variables.tf` antes de aplicar.
 
 ## Estrutura de Pastas
 
@@ -61,33 +88,6 @@ O tamanho máximo da claim Name é de 256 caracteres.
 ¦   +-- app/                # Aplicação principal
 
 ```
-
-## Uso
-
-Execute a aplicação localmente:
-
-```bash
-dotnet run --project src/app/authcloud.csproj
-```
-
-A API estará disponível em `http://localhost:5088`.
-
-## Documentação dos Endpoints
-
-Para detalhes sobre os endpoints da API, consulte o [README dos Endpoints](docs/endpoints.md).
-
-## Testes
-
-Para rodar os testes unitários:
-
-```bash
-dotnet test src/unit-tests/authcloud.UnitTests.csproj
-```
-
-## Infraestrutura
-
-- **Helm**: Use o chart localizado em `infra/helm-chart` para o deploy no Kubernetes.
-- **Terraform**: Os scripts de infraestrutura do Terraform estão em `infra/terraform`. Certifique-se de configurar as variáveis em `variables.tf` antes de aplicar.
 
 ## Documentação
 
