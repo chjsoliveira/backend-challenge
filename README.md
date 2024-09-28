@@ -13,12 +13,12 @@ O tamanho máximo da claim Name é de 256 caracteres.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/authcloud.git
+   git clone https://github.com/chjsoliveira/backend-challenge.git
    ```
 
 2. Navegue até o diretório do projeto:
    ```bash
-   cd authcloud
+   cd backend-challenge/src
    ```
 
 3. Instale as dependências:
@@ -70,7 +70,18 @@ Execute a aplicação localmente:
 dotnet run --project src/app/authcloud.csproj
 ```
 
-A API estará disponível em `http://localhost:5000`.
+A API estará disponível em `http://localhost:5088`.
+
+## Exemplo de Chamada
+
+Substitua o token onde está indicado como {SEU_TOKEN_AQUI}. Formato string.
+
+```curl
+curl --request POST \
+  --url http://localhost:5088/api/jwtvalidation/validate \
+  --header 'Content-Type: application/json' \
+  --data '"{SEU_TOKEN_AQUI}"'
+```
 
 ## Testes
 
