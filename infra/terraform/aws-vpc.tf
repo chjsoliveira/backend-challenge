@@ -1,6 +1,6 @@
 resource "aws_subnet" "private_subnet_1a" {
   vpc_id            = var.main_vpc
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = "172.31.33.0/20"
   availability_zone = "us-east-1a"
 
   tags = {
@@ -10,7 +10,7 @@ resource "aws_subnet" "private_subnet_1a" {
 
 resource "aws_subnet" "private_subnet_1b" {
   vpc_id            = var.main_vpc
-  cidr_block        = "10.0.3.0/24"
+  cidr_block        = "172.31.1.0/20"
   availability_zone = "us-east-1b"
 
   tags = {
