@@ -18,28 +18,6 @@ resource "aws_subnet" "private_subnet_1b" {
   }
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = var.main_vpc
-
-  tags = {
-    Name = "private-igw"
-  }
-}
-
-resource "aws_route_table" "public_rt" {
-  vpc_id = var.main_vpc
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
-
-  tags = {
-    Name = "public-route-table"
-  }
-}
-
-
 # (Opcional) Criação de uma rota para a sub-rede privada (se necessário)
 resource "aws_route_table" "private_rt" {
   vpc_id = var.main_vpc
