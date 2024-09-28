@@ -25,17 +25,13 @@
 	A resposta será um objeto JSON contendo informações sobre a validação. Um exemplo de resposta de sucesso é:
 
     ```json
-    {
-      "valid": true
-    }
+    true
     ```
 
 	Em caso de falha na validação, a resposta pode ser:
 
     ```json
-    {
-      "valid": false
-    }
+    false
     ```
 
 - **Códigos de Status:**
