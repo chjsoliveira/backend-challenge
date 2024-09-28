@@ -1,29 +1,6 @@
-provider "aws" {
-  region = "us-east-1" # Substitua pela sua região
-}
-
-resource "aws_vpc" "main_vpc" {
-  cidr_block = "10.0.0.0/16"
-
-  tags = {
-    Name = "main-vpc"
-  }
-}
-
-resource "aws_subnet" "public_subnet" {
-  vpc_id                   = aws_vpc.main_vpc.id
-  cidr_block               = "10.0.1.0/24"
-  availability_zone        = "us-east-1a"
-  map_public_ip_on_launch  = true
-
-  tags = {
-    Name = "public-subnet"
-  }
-}
-
 resource "aws_subnet" "private_subnet_1a" {
-  vpc_id            = aws_vpc.main_vpc.id
-  cidr_block        = "10.0.2.0/24"
+  vpc_id            = var.main_vpc
+  cidr_block        = "172.31.33.0/20"
   availability_zone = "us-east-1a"
 
   tags = {
@@ -32,8 +9,8 @@ resource "aws_subnet" "private_subnet_1a" {
 }
 
 resource "aws_subnet" "private_subnet_1b" {
-  vpc_id            = aws_vpc.main_vpc.id
-  cidr_block        = "10.0.3.0/24"
+  vpc_id            = var.main_vpc
+  cidr_block        = "172.31.1.0/20"
   availability_zone = "us-east-1b"
 
   tags = {
@@ -42,15 +19,15 @@ resource "aws_subnet" "private_subnet_1b" {
 }
 
 resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = var.main_vpc
 
   tags = {
-    Name = "main-igw"
+    Name = "private-igw"
   }
 }
 
 resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = var.main_vpc
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -69,7 +46,7 @@ resource "aws_route_table_association" "public_subnet_association" {
 
 # (Opcional) Criação de uma rota para a sub-rede privada (se necessário)
 resource "aws_route_table" "private_rt" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = var.main_vpc
 
   tags = {
     Name = "private-route-table"
