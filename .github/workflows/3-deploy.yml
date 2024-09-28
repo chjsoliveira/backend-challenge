@@ -111,6 +111,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install kubectl (apenas para EKS)
+        working-directory: infra/helm-chart 
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
@@ -120,10 +121,11 @@ jobs:
         run: aws eks update-kubeconfig --name authcloud-eks --region ${{ secrets.AWS_REGION }}
 
       - name: Install Helm (EKS)
+        working-directory: infra/helm-chart 
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
       - name: Deploy application using Helm (EKS)
-        if: ${{ github.event.inputs.destroy == 'false' }}  # Adicionando verificação para não executar se destroy for true
+        #if: ${{ github.event.inputs.destroy == 'false' }}  # Adicionando verificação para não executar se destroy for true
         run: |
           helm upgrade --install authcloud ./helm/authcloud-chart --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud --set image.tag=latest
