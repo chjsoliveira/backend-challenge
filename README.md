@@ -72,16 +72,9 @@ dotnet run --project src/app/authcloud.csproj
 
 A API estará disponível em `http://localhost:5088`.
 
-## Exemplo de Chamada
+## Documentação dos Endpoints
 
-Substitua o token onde está indicado como {SEU_TOKEN_AQUI}. Formato string.
-
-```curl
-curl --request POST \
-  --url http://localhost:5088/api/jwtvalidation/validate \
-  --header 'Content-Type: application/json' \
-  --data '"{SEU_TOKEN_AQUI}"'
-```
+Para detalhes sobre os endpoints da API, consulte o [README dos Endpoints](docs/endpoints.md).
 
 ## Testes
 
