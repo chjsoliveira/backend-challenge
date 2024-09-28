@@ -24,14 +24,3 @@ spec:
           limits:
             memory: {{ .Values.resources.limits.memory }}
             cpu: {{ .Values.resources.limits.cpu }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: authcloud-service
-spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-  selector:
-    app: authcloud
