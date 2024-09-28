@@ -1,27 +1,27 @@
-# backend-challenge
+ï»¿# backend-challenge
 
-Este projeto contém a aplicação **authcloud**, focada em expor uma api web que recebe por parametros um JWT (string) e verifica se é valida conforme regras abaixo:
+Este projeto contÃ©m a aplicaÃ§Ã£o **authcloud**, focada em expor uma api web que recebe por parametros um JWT (string) e verifica se Ã© valida conforme regras abaixo:
 
-Deve ser um JWT válido
+Deve ser um JWT vÃ¡lido
 Deve conter apenas 3 claims (Name, Role e Seed)
-A claim Name não pode ter carácter de números
-A claim Role deve conter apenas 1 dos três valores (Admin, Member e External)
-A claim Seed deve ser um número primo.
-O tamanho máximo da claim Name é de 256 caracteres.
+A claim Name nÃ£o pode ter carÃ¡cter de nÃºmeros
+A claim Role deve conter apenas 1 dos trÃªs valores (Admin, Member e External)
+A claim Seed deve ser um nÃºmero primo.
+O tamanho mÃ¡ximo da claim Name Ã© de 256 caracteres.
 
-## Instalação
+## InstalaÃ§Ã£o
 
-1. Clone o repositório:
+1. Clone o repositÃ³rio:
    ```bash
    git clone https://github.com/seu-usuario/authcloud.git
    ```
 
-2. Navegue até o diretório do projeto:
+2. Navegue atÃ© o diretÃ³rio do projeto:
    ```bash
    cd authcloud
    ```
 
-3. Instale as dependências:
+3. Instale as dependÃªncias:
    ```bash
    dotnet restore
    ```
@@ -35,46 +35,46 @@ O tamanho máximo da claim Name é de 256 caracteres.
 
 ```bash
 .
-¦
-+-- docs/                   # Documentação do projeto
-¦   +-- Arquitetura.drawio   # Diagrama de arquitetura (editável)
-¦   +-- Arquitetura.drawio.png  # Diagrama da arquitetura em formato PNG
-¦
+Â¦
++-- docs/                   # DocumentaÃ§Ã£o do projeto
+Â¦   +-- Arquitetura.drawio   # Diagrama de arquitetura (editÃ¡vel)
+Â¦   +-- Arquitetura.drawio.png  # Diagrama da arquitetura em formato PNG
+Â¦
 +-- infra/                  # Infraestrutura para deployment
-¦   +-- helm-chart/         # Helm chart para Kubernetes
-¦   ¦   +-- values.yaml     # Valores configuráveis do Helm chart
-¦   ¦   +-- templates/      # Templates Kubernetes para deployment
-¦   ¦       +-- deployment.yaml # Definição do deployment no Kubernetes
-¦   ¦       +-- service.yaml    # Definição do service no Kubernetes
-¦   +-- terraform/          # Configurações de infraestrutura como código (IaC) usando Terraform
-¦       +-- aws-ecr.tf      # Definição do repositório ECR na AWS
-¦       +-- aws-ecs.tf      # Configuração do ECS (Elastic Container Service)
-¦       +-- aws-load-balancer.tf # Configuração do Load Balancer da AWS
-¦       +-- aws-role.tf     # Políticas e roles da AWS
-¦       +-- aws-sg.tf       # Configuração de security groups da AWS
-¦       +-- main.tf         # Arquivo principal do Terraform
-¦       +-- variables.tf    # Variáveis de entrada para o Terraform
-¦
-+-- src/                    # Código-fonte da aplicação authcloud
-¦   +-- Dockerfile          # Definição do container Docker
-¦   +-- unit-tests/         # Testes unitários da aplicação
-¦   +-- app/                # Aplicação principal
+Â¦   +-- helm-chart/         # Helm chart para Kubernetes
+Â¦   Â¦   +-- values.yaml     # Valores configurÃ¡veis do Helm chart
+Â¦   Â¦   +-- templates/      # Templates Kubernetes para deployment
+Â¦   Â¦       +-- deployment.yaml # DefiniÃ§Ã£o do deployment no Kubernetes
+Â¦   Â¦       +-- service.yaml    # DefiniÃ§Ã£o do service no Kubernetes
+Â¦   +-- terraform/          # ConfiguraÃ§Ãµes de infraestrutura como cÃ³digo (IaC) usando Terraform
+Â¦       +-- aws-ecr.tf      # DefiniÃ§Ã£o do repositÃ³rio ECR na AWS
+Â¦       +-- aws-ecs.tf      # ConfiguraÃ§Ã£o do ECS (Elastic Container Service)
+Â¦       +-- aws-load-balancer.tf # ConfiguraÃ§Ã£o do Load Balancer da AWS
+Â¦       +-- aws-role.tf     # PolÃ­ticas e roles da AWS
+Â¦       +-- aws-sg.tf       # ConfiguraÃ§Ã£o de security groups da AWS
+Â¦       +-- main.tf         # Arquivo principal do Terraform
+Â¦       +-- variables.tf    # VariÃ¡veis de entrada para o Terraform
+Â¦
++-- src/                    # CÃ³digo-fonte da aplicaÃ§Ã£o authcloud
+Â¦   +-- Dockerfile          # DefiniÃ§Ã£o do container Docker
+Â¦   +-- unit-tests/         # Testes unitÃ¡rios da aplicaÃ§Ã£o
+Â¦   +-- app/                # AplicaÃ§Ã£o principal
 
 ```
 
 ## Uso
 
-Execute a aplicação localmente:
+Execute a aplicaÃ§Ã£o localmente:
 
 ```bash
 dotnet run --project src/app/authcloud.csproj
 ```
 
-A API estará disponível em `http://localhost:5000`.
+A API estarÃ¡ disponÃ­vel em `http://localhost:5000`.
 
 ## Testes
 
-Para rodar os testes unitários:
+Para rodar os testes unitÃ¡rios:
 
 ```bash
 dotnet test src/unit-tests/authcloud.UnitTests.csproj
@@ -83,10 +83,10 @@ dotnet test src/unit-tests/authcloud.UnitTests.csproj
 ## Infraestrutura
 
 - **Helm**: Use o chart localizado em `infra/helm-chart` para o deploy no Kubernetes.
-- **Terraform**: Os scripts de infraestrutura do Terraform estão em `infra/terraform`. Certifique-se de configurar as variáveis em `variables.tf` antes de aplicar.
+- **Terraform**: Os scripts de infraestrutura do Terraform estÃ£o em `infra/terraform`. Certifique-se de configurar as variÃ¡veis em `variables.tf` antes de aplicar.
 
-## Documentação
+## DocumentaÃ§Ã£o
 
-Os diagramas de arquitetura estão disponíveis no diretório `docs/`.
+Os diagramas de arquitetura estÃ£o disponÃ­veis no diretÃ³rio `docs/`.
 
 ![Diagrama do Sistema](docs/Arquitetura.drawio.png)
