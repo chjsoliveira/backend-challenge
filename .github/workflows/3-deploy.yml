@@ -45,7 +45,6 @@ jobs:
                    
       - name: Terraform Apply
         working-directory: infra/terraform 
-        if: ${{ github.event.inputs.destroy == 'false' }}  
         run: terraform apply -auto-approve
         env:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
