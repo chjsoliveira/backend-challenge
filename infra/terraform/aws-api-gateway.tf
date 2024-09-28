@@ -28,7 +28,7 @@ resource "aws_api_gateway_integration" "validate_jwt_integration" {
 
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = aws_lb.authcloud_lb.dns_name # Use o DNS do Load Balancer
+  uri                     = "http://${aws_lb.authcloud_lb.dns_name}"
 }
 
 # Deploy do API Gateway
