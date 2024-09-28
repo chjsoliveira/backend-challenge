@@ -22,6 +22,13 @@ resource "aws_iam_role" "eks_role" {
       Principal = {
         Service = "eks.amazonaws.com"
       }
+    },
+    {
+      Action = "sts:AssumeRole",
+      Effect = "Allow",
+      Principal = {
+        Service = "eks-fargate-pods.amazonaws.com"
+      }
     }]
   })
 
