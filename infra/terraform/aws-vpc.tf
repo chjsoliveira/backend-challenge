@@ -21,10 +21,20 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "private_subnet_1a" {
   vpc_id            = aws_vpc.main_vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "private-subnet"
+  }
+}
+
+resource "aws_subnet" "private_subnet_1b" {
+  vpc_id            = aws_vpc.main_vpc.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "us-east-1b"
 
   tags = {
     Name = "private-subnet"
@@ -66,7 +76,11 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
-resource "aws_route_table_association" "private_subnet_association" {
-  subnet_id      = aws_subnet.private_subnet.id
+resource "aws_route_table_association" "private_subnet_1a_association" {
+  subnet_id      = aws_subnet.private_subnet_1a.id
+  route_table_id = aws_route_table.private_rt.id
+}
+resource "aws_route_table_association" "private_subnet_1b_association" {
+  subnet_id      = aws_subnet.private_subnet_1b.id
   route_table_id = aws_route_table.private_rt.id
 }
