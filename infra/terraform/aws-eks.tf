@@ -4,7 +4,10 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.private_subnet.id]  
+    subnet_ids = [
+		aws_subnet.private_subnet_1a.id,
+		aws_subnet.private_subnet_1b.id
+	]  
   }
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
 }
@@ -53,6 +56,7 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
     namespace = "default"  # O namespace onde seus pods estarão
   }
   subnet_ids = [
-    aws_subnet.private_subnet.id,  # Adiciona a sub-rede privada
+	aws_subnet.private_subnet_1a.id,
+	aws_subnet.private_subnet_1b.id
   ]
 }
