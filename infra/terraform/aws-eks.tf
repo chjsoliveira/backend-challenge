@@ -53,5 +53,5 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   selector {
     namespace = "default"  # O namespace onde seus pods estarão
   }
-  subnet_ids = var.public_subnets
+  subnet_ids = aws_subnet.private_subnet.id
 }
