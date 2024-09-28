@@ -130,3 +130,18 @@ jobs:
         run: |
           helm upgrade --install authcloud ./infra/helm-chart --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/authcloud --set image.tag=latest
           
+      # Passos para validação
+      - name: Validate Deployment
+        run: |
+          # Esperar alguns segundos para o deployment ser processado
+          sleep 30
+          
+          # Verificar o status dos pods
+          kubectl get pods
+          
+          # Verificar logs do pod (substitua <pod-name> pelo nome real do pod)
+          POD_NAME=$(kubectl get pods --selector=app=authcloud -o jsonpath='{.items[0].metadata.name}')
+          kubectl logs $POD_NAME
+          
+          # Verificar o status do serviço
+          kubectl get services
