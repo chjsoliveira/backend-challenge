@@ -39,10 +39,6 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-resource "aws_route_table_association" "public_subnet_association" {
-  subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public_rt.id
-}
 
 # (Opcional) Criação de uma rota para a sub-rede privada (se necessário)
 resource "aws_route_table" "private_rt" {
