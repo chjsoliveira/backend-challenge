@@ -9,6 +9,10 @@ Este projeto contém a aplicação **authcloud**, focada em expor uma api web qu
 - A claim Seed deve ser um número primo.
 - O tamanho máximo da claim Name é de 256 caracteres.
 
+## Arquitetura
+
+![Diagrama do Sistema](docs/Arquitetura.drawio.png)
+
 ## Instalação
 
 1. Clone o repositório:
@@ -93,4 +97,3 @@ dotnet test src/unit-tests/authcloud.UnitTests.csproj
 
 Os diagramas de arquitetura estão disponíveis no diretório `docs/`.
 
-![Diagrama do Sistema](docs/Arquitetura.drawio.png)
