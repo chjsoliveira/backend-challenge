@@ -4,9 +4,8 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
   role_arn = aws_iam_role.eks_role.arn
 
   vpc_config {
-    subnet_ids = var.public_subnets
+    subnet_ids = [aws_subnet.private_subnet.id]  
   }
-
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
 }
 
