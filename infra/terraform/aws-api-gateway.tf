@@ -19,6 +19,7 @@ resource "aws_api_gateway_method" "post_validate_jwt" {
   authorization = "NONE"  # Ou utilize um método de autenticação
 }
 
+
 # Integração com o Load Balancer
 resource "aws_api_gateway_integration" "validate_jwt_integration" {
   rest_api_id = aws_api_gateway_rest_api.auth_api.id
@@ -27,7 +28,7 @@ resource "aws_api_gateway_integration" "validate_jwt_integration" {
 
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.authcloud_lb.dns_name}/"  # Referenciando o Load Balancer
+  uri                     = aws_lb_listener.authcloud_listener.dns_name # Use o DNS do Load Balancer
 }
 
 # Deploy do API Gateway
