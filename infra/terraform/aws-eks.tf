@@ -20,21 +20,41 @@ resource "aws_iam_role" "eks_role" {
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
-    Statement = [{
-      Action = "sts:AssumeRole",
-      Effect = "Allow",
-      Principal = {
-        Service = "eks.amazonaws.com"
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "eks.amazonaws.com"
+        }
+      },
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "eks-fargate-pods.amazonaws.com"
+        }
       }
-    }, {
-      Action = "sts:AssumeRole",
-      Effect = "Allow",
-      Principal = {
-        Service = "eks-fargate-pods.amazonaws.com"
-      }
-    }, {
+    ]
+  })
+
+  tags = {
+    Name = "eks-role"
+  }
+}
+
+# Criando uma política IAM para o EKS
+resource "aws_iam_policy" "eks_custom_policy" {
+  name        = "EKSCustomPolicy"
+  description = "Custom policy for EKS with necessary permissions."
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
         Action = [
-          "eks:*",
+          "eks:DescribeCluster",
           "ec2:DescribeSubnets",
           "ec2:DescribeSecurityGroups",
           "ec2:CreateSecurityGroup",
@@ -44,18 +64,19 @@ resource "aws_iam_role" "eks_role" {
           "iam:CreateRole",
           "iam:DeleteRole",
           "iam:AttachRolePolicy",
-          "iam:DetachRolePolicy",
+          "iam:DetachRolePolicy"
         ],
-        Effect = "Allow",
         Resource = "*"
-     }]
+      }
+    ]
   })
-
-  tags = {
-    Name = "eks-role"
-  }
 }
 
+# Anexando a política personalizada ao IAM Role do EKS
+resource "aws_iam_role_policy_attachment" "eks_custom_policy_attachment" {
+  policy_arn = aws_iam_policy.eks_custom_policy.arn
+  role       = aws_iam_role.eks_role.name
+}
 
 # Anexando políticas ao IAM Role do EKS
 resource "aws_iam_role_policy_attachment" "eks_role_policy" {
