@@ -5,6 +5,7 @@ image:
   tag: "latest"
 
 service:
+  name: authcloud
   type: NodePort
   port: 80
   nodePort: 30001
