@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "authcloud" . }}
+  name: authcloud-service
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -9,4 +9,4 @@ spec:
       targetPort: {{ .Values.service.port }}
       nodePort: {{ .Values.service.nodePort | default (randInt 30000 32767) }}
   selector:
-    app: {{ include "authcloud" . }}
+    app: authcloud-service
