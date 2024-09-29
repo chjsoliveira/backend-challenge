@@ -5,8 +5,9 @@ image:
   tag: "latest"
 
 service:
-  type: LoadBalancer
+  type: NodePort
   port: 80
+  nodePort: 30001
 
 resources:
   requests:
@@ -15,3 +16,4 @@ resources:
   limits:
     memory: "512Mi"  # Memória limite
     cpu: "500m"  # CPU limite
+
