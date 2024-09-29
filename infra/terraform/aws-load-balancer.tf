@@ -1,4 +1,4 @@
-# Criando o Load Balancer
+# Criando o Load Balancer - ALB
 resource "aws_lb" "authcloud_lb" {
   name               = "authcloud-load-balancer"
   internal           = false
@@ -16,7 +16,7 @@ resource "aws_lb" "authcloud_lb" {
 # Criando o Target Group
 resource "aws_lb_target_group" "authcloud_tg" {
   name     = "authcloud-target-group"
-  port     = 80
+  port     = 30001
   protocol = "HTTP"
   vpc_id   = var.main_vpc
 
