@@ -2,13 +2,15 @@
 resource "aws_eks_cluster" "auth_cloud_cluster" {
   name     = "authcloud-cluster"
   role_arn = aws_iam_role.eks_role.arn
-  version = "1.31"  # Atualizar kubernets
+  version  = "1.31"
+
   vpc_config {
     subnet_ids = [
-		aws_subnet.private_subnet_1a.id,
-		aws_subnet.private_subnet_1b.id
-	]  
+      aws_subnet.private_subnet_1a.id,
+      aws_subnet.private_subnet_1b.id,
+    ]
   }
+
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
 }
 
@@ -24,8 +26,7 @@ resource "aws_iam_role" "eks_role" {
       Principal = {
         Service = "eks.amazonaws.com"
       }
-    },
-    {
+    }, {
       Action = "sts:AssumeRole",
       Effect = "Allow",
       Principal = {
@@ -45,18 +46,24 @@ resource "aws_iam_role_policy_attachment" "eks_role_policy" {
   role       = aws_iam_role.eks_role.name
 }
 
+# Anexando política de execução de pods Fargate
+resource "aws_iam_role_policy_attachment" "fargate_execution_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"
+  role       = aws_iam_role.eks_role.name
+}
+
 # Criando um Fargate Profile para o EKS
 resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
-  cluster_name = aws_eks_cluster.auth_cloud_cluster.name
-  fargate_profile_name = "authcloud-fargate-profile"
-
+  cluster_name           = aws_eks_cluster.auth_cloud_cluster.name
+  fargate_profile_name   = "authcloud-fargate-profile"
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
     namespace = "default"  # O namespace onde seus pods estarão
   }
+
   subnet_ids = [
-	aws_subnet.private_subnet_1a.id,
-	aws_subnet.private_subnet_1b.id
+    aws_subnet.private_subnet_1a.id,
+    aws_subnet.private_subnet_1b.id
   ]
 }
