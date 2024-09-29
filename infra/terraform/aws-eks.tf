@@ -32,13 +32,30 @@ resource "aws_iam_role" "eks_role" {
       Principal = {
         Service = "eks-fargate-pods.amazonaws.com"
       }
-    }]
+    }, {
+        Action = [
+          "eks:*",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:CreateSecurityGroup",
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupIngress",
+          "iam:PassRole",
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+        ],
+        Effect = "Allow",
+        Resource = "*"
+     }]
   })
 
   tags = {
     Name = "eks-role"
   }
 }
+
 
 # Anexando políticas ao IAM Role do EKS
 resource "aws_iam_role_policy_attachment" "eks_role_policy" {
