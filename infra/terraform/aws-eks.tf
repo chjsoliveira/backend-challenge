@@ -2,7 +2,7 @@
 resource "aws_eks_cluster" "auth_cloud_cluster" {
   name     = "authcloud-cluster"
   role_arn = aws_iam_role.eks_role.arn
-  version  = "1.31"
+  version  = "1.32"
 
   vpc_config {
     subnet_ids = [
@@ -121,6 +121,7 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     max_size     = 3
     min_size     = 1
   }
+  instance_type = "t4g.nano"
 }
 
 # Criando um Fargate Profile para o EKS
