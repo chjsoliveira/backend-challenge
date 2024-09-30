@@ -1,28 +1,33 @@
-
-# Security Group para EKS
 resource "aws_security_group" "eks_security_group" {
   name        = "eks-security-group"
-  description = "Allow traffic from API Gateway and Load Balancer"
+  description = "Allow traffic for EKS"
   vpc_id      = var.main_vpc
 
   ingress {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Permitir acesso público 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Permitir acesso HTTPS 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
   }
 
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"  # Permitir todo o tráfego de saída
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
