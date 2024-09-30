@@ -133,7 +133,7 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     max_size     = 3
     min_size     = 1
   }
-  instance_type = "t4g.nano"
+  instance_types = ["t4g.nano"]
 }
 
 # Criando um Fargate Profile para o EKS
