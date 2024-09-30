@@ -2,7 +2,7 @@
 resource "aws_eks_cluster" "auth_cloud_cluster" {
   name     = "authcloud-cluster"
   role_arn = aws_iam_role.eks_role.arn
-  version  = "1.32"
+  version  = "1.31"
 
   vpc_config {
     subnet_ids = [
