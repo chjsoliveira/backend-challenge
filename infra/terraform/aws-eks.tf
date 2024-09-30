@@ -10,9 +10,9 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
       aws_subnet.private_subnet_1b.id,
     ]
   }
-  security_group_ids = [
-    aws_security_group.eks_security_group.id
-  ]
+  resources {
+    security_group_ids = [aws_security_group.eks_security_group.id]
+  }
 
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
 }
