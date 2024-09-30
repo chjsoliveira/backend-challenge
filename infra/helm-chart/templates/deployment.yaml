@@ -24,3 +24,7 @@ spec:
           limits:
             memory: {{ .Values.resources.limits.memory }}
             cpu: {{ .Values.resources.limits.cpu }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: aws-logging
