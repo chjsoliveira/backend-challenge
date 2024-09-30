@@ -10,6 +10,9 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
       aws_subnet.private_subnet_1b.id,
     ]
   }
+  security_group_ids = [
+    aws_security_group.eks_security_group.id
+  ]
 
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
 }
@@ -121,6 +124,7 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     min_size     = 1
   }
   instance_types = ["t3a.nano"]
+  node_group_sg = [aws_security_group.eks_security_group.id]
 }
 
 # Criando um Fargate Profile para o EKS

@@ -3,7 +3,7 @@ resource "aws_lb" "authcloud_lb" {
   name               = "authcloud-load-balancer"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.eks_security_group.id]
+  security_groups    = [aws_security_group.lb_security_group.id]
   subnets            = [aws_subnet.private_subnet_1a.id, aws_subnet.private_subnet_1b.id]  # Subnets para o Load Balancer
 
   enable_deletion_protection = false
@@ -36,7 +36,7 @@ resource "aws_lb_target_group" "authcloud_tg" {
 # Criando o Listener
 resource "aws_lb_listener" "authcloud_listener" {
   load_balancer_arn = aws_lb.authcloud_lb.arn
-  port              = 80
+  port              = 30001
   protocol          = "HTTP"
 
   default_action {
