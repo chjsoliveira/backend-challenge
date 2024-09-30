@@ -2,7 +2,7 @@
 resource "aws_eks_cluster" "auth_cloud_cluster" {
   name     = "authcloud-cluster"
   role_arn = aws_iam_role.eks_role.arn
-  version  = "1.31"
+  version  = "1.32"
 
   vpc_config {
     subnet_ids = [
@@ -106,6 +106,18 @@ resource "aws_iam_role_policy_attachment" "eks_node_role_policy" {
   role       = aws_iam_role.eks_node_role.name
 }
 
+
+resource "aws_iam_role_policy_attachment" "ec2_ecr_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks_node_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "cni_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_node_role.name
+}
+
+
 # Criar node group 
 resource "aws_eks_node_group" "auth_cloud_node_group" {
   cluster_name    = aws_eks_cluster.auth_cloud_cluster.name
@@ -121,6 +133,7 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     max_size     = 3
     min_size     = 1
   }
+  instance_type = "t4g.nano"
 }
 
 # Criando um Fargate Profile para o EKS
