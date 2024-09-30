@@ -133,7 +133,7 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     max_size     = 3
     min_size     = 1
   }
-  instance_types = ["t4g.nano"]
+  instance_types = ["t3a.nano"]
 }
 
 # Criando um Fargate Profile para o EKS
@@ -143,7 +143,7 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "default"  # O namespace onde seus pods estarão
+    namespace = "authcloud-api" 
   }
 
   subnet_ids = [
