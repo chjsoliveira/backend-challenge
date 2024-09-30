@@ -2,3 +2,13 @@ apiVersion: v1
 name: authcloud
 description: Helm chart para deploy de aplicação authcloud para bvalidação de token jwt.
 version: 0.1.0
+type: application
+version: 0.1.0
+appVersion: "0.37.0"
+kubeVersion: ">=1.19.0-0"
+maintainers:
+  - name: Carlos Henrique J S Oliveira
+    email: chjs.oliveira@gmail.com
+home: https://github.com/chjsoliveira/backend-challenge
+sources:
+  - https://github.com/chjsoliveira/backend-challenge
