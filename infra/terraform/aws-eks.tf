@@ -1,13 +1,19 @@
 # Criando o Cluster EKS
 resource "aws_eks_cluster" "auth_cloud_cluster" {
-  name     = "authcloud-cluster"
+  name     = var.cluster_name
   role_arn = aws_iam_role.eks_role.arn
   version  = "1.31"
 
   vpc_config {
+
+    endpoint_private_access = false
+    endpoint_public_access  = true
+    public_access_cidrs     = ["0.0.0.0/0]
+
     subnet_ids = [
       aws_subnet.private_subnet_1a.id,
       aws_subnet.private_subnet_1b.id,
+      aws_subnet.public_subnet_1a.id
     ]
     endpoint_public_access = true
     security_group_ids = [aws_security_group.eks_security_group.id]
@@ -161,11 +167,11 @@ resource "aws_iam_instance_profile" "eks_instance_profile" {
 # Criando um Fargate Profile para o EKS
 resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   cluster_name           = aws_eks_cluster.auth_cloud_cluster.name
-  fargate_profile_name   = "authcloud-fargate-profile"
+  fargate_profile_name   = "kube-system"
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "authcloud-api" 
+    namespace = "kube-system" 
   }
 
   subnet_ids = [
