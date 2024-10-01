@@ -4,3 +4,9 @@ variable "main_vpc" {
   default     = "vpc-08ce9dcf2e20ae48b"
 }
 
+variable "cluster_name" {
+  description = "nome do clister eks"
+  type        = string
+  default     = "authcloud-cluster"
+}
+
