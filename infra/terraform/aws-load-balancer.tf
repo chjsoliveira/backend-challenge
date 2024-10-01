@@ -17,7 +17,7 @@ resource "aws_lb" "authcloud_lb" {
 # Criando o Target Group
 resource "aws_lb_target_group" "authcloud_tg" {
   name     = "authcloud-target-group"
-  port     = 30001
+  port     = 8080
   protocol = "HTTP"
   vpc_id   = var.main_vpc
 
