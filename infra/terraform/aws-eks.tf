@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
 
     endpoint_private_access = false
     endpoint_public_access  = true
-    public_access_cidrs     = ["0.0.0.0/0]
+    public_access_cidrs     = ["0.0.0.0/0"]
 
     subnet_ids = [
       aws_subnet.private_subnet_1a.id,
