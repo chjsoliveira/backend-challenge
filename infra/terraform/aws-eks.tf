@@ -15,7 +15,6 @@ resource "aws_eks_cluster" "auth_cloud_cluster" {
       aws_subnet.private_subnet_1b.id,
       aws_subnet.public_subnet_1a.id
     ]
-    endpoint_public_access = true
     security_group_ids = [aws_security_group.eks_security_group.id]
   }
   depends_on = [aws_iam_role_policy_attachment.eks_role_policy]
