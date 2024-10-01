@@ -73,4 +73,5 @@ resource "aws_security_group" "eks_security_group" {
   tags = {
     Name = "eks-security-group"
   }
+  depends_on = [aws_security_group.lb_security_group]
 }

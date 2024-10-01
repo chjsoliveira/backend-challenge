@@ -11,6 +11,7 @@ resource "aws_lb" "authcloud_lb" {
   tags = {
     Name = "authcloud-load-balancer"
   }
+  depends_on = [aws_security_group.lb_security_group]
 }
 
 # Criando o Target Group
@@ -43,4 +44,8 @@ resource "aws_lb_listener" "authcloud_listener" {
     type = "forward"
     target_group_arn = "${aws_lb_target_group.authcloud_tg.arn}"
   }
+  depends_on = [
+    aws_lb.authcloud_lb,                  # Listener depende do Load Balancer
+    aws_lb_target_group.authcloud_tg       # Listener depende do Target Group
+  ]
 }
