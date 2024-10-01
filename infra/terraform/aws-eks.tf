@@ -144,7 +144,6 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     min_size     = 1
   }
   instance_types = ["t3a.nano"]
-  node_group_sg = [aws_security_group.eks_security_group.id]
 }
 
 # Criando um Fargate Profile para o EKS
