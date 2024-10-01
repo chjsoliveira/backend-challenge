@@ -28,7 +28,7 @@ resource "aws_api_gateway_integration" "validate_jwt_integration" {
 
   integration_http_method = "POST"
   type                    = "HTTP_PROXY"
-  uri                     = "http://${aws_lb.authcloud_lb.dns_name}"
+  uri                     = "http://${aws_lb.authcloud_lb.dns_name}/api/jwtvalidation/validate"
 }
 
 # Deploy do API Gateway
