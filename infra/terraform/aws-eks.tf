@@ -1,4 +1,4 @@
-oi# Criando o Cluster EKS
+# Criando o Cluster EKS
 resource "aws_eks_cluster" "auth_cloud_cluster" {
   name     = "authcloud-cluster"
   role_arn = aws_iam_role.eks_role.arn
