@@ -139,9 +139,5 @@ jobs:
           # Verificar o status dos pods
           kubectl get pods
           
-          # Verificar logs do pod (substitua <pod-name> pelo nome real do pod)
-          POD_NAME=$(kubectl get pods --selector=app=authcloud -o jsonpath='{.items[0].metadata.name}')
-          kubectl logs $POD_NAME
-          
           # Verificar o status do serviço
           kubectl get services
