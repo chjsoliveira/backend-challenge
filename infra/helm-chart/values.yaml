@@ -8,6 +8,7 @@ service:
   type: NodePort
   port: 80
   nodePort: 30001
+  albarn: "arn:aws:elasticloadbalancing:us-east-1:097733790606:loadbalancer/app/authcloud-load-balancer/12414d25035e73e7"
 
 resources:
   requests:
