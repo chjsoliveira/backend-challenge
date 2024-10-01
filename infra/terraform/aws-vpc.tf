@@ -41,13 +41,6 @@ resource "aws_subnet" "private_subnet_1b" {
   }
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = var.main_vpc
-
-  tags = {
-    Name = "igw"
-  }
-}
 
 
 # EIP para o NAT Gateway
@@ -66,7 +59,6 @@ resource "aws_nat_gateway" "nat" {
   tags = {
     Name = "nat"
   }
-depends_on = [aws_internet_gateway.igw]
 }
 
 # Tabela de rotas para a sub-rede privada
@@ -96,18 +88,6 @@ resource "aws_route_table" "private" {
   }
 }
 
-resource "aws_route_table" "public" {
-  vpc_id = var.main_vpc
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
-  }
-
-  tags = {
-    Name = "public"
-  }
-}
 
 resource "aws_route_table_association" "private-us-east-1a" {
   subnet_id      = aws_subnet.private_subnet_1a.id
