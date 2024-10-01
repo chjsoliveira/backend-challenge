@@ -7,6 +7,9 @@ resource "aws_subnet" "public_subnet_1a" {
 
   tags = {
     Name = "public-subnet-1"
+    "kubernetes.io/role/elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+
   }
 }
 
@@ -17,7 +20,10 @@ resource "aws_subnet" "private_subnet_1a" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "private-subnet-1"
+    Name = "private-subnet-1",
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+
   }
 }
 
@@ -28,7 +34,10 @@ resource "aws_subnet" "private_subnet_1b" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "private-subnet-2"
+    Name = "private-subnet-2",
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+
   }
 }
 
