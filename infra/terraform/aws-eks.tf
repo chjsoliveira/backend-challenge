@@ -145,14 +145,17 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
   }
   instance_types = ["t3a.nano"]
   capacity_type = "SPOT"
-
+  tags = {
+    "Name"                               = "authcloud-node-group"
+    "kubernetes.io/cluster/authcloud-cluster" = "owned"
+  }
 }
 
 
 # IAM Role para as instâncias do Node Group
 resource "aws_iam_instance_profile" "eks_instance_profile" {
   name = "eks-instance-profile"
-  role = aws_iam_role.eks_role.name
+  role = aws_iam_role.eks_node_role.name
 }
 
 # Criando um Fargate Profile para o EKS
