@@ -144,6 +144,41 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
     min_size     = 1
   }
   instance_types = ["t3a.nano"]
+  capacity_type = "SPOT"
+  launch_template {
+    id      = aws_launch_template.spot_template.id
+    version = "$Latest"
+  }
+
+}
+
+# Launch Template para Node Group com Spot
+resource "aws_launch_template" "spot_template" {
+  name          = "authcloud-spot-launch-template"
+  instance_type = "t3a.nano"  # Escolha o tipo de instância
+  spot_options {
+    max_price = "0.05"  # Preço máximo que está disposto a pagar pela instância Spot
+  }
+  iam_instance_profile {
+    name = aws_iam_instance_profile.eks_instance_profile.name
+  }
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_size = 20  # Tamanho do disco
+      volume_type = "gp2"
+    }
+  }
+
+  tags = {
+    Name = "authcloud-spot-node"
+  }
+}
+
+# IAM Role para as instâncias do Node Group
+resource "aws_iam_instance_profile" "eks_instance_profile" {
+  name = "eks-instance-profile"
+  role = aws_iam_role.eks_role.name
 }
 
 # Criando um Fargate Profile para o EKS
