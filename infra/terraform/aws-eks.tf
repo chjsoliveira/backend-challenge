@@ -187,39 +187,6 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   depends_on = [aws_eks_cluster.auth_cloud_cluster]
 }
 
-resource "aws_eks_addon" "addons" {
-  cluster_name      = aws_eks_cluster.auth_cloud_cluster.id
-  addon_name        = "vpc-cni"    # Nome do addon (exemplo: vpc-cni)
-  addon_version     = "v1.10.0-eksbuild.1"  # Versão específica do addon
-  resolve_conflicts = "OVERWRITE"
-}
-resource "aws_eks_addon" "coredns" {
-  cluster_name      = aws_eks_cluster.auth_cloud_cluster.name
-  addon_name        = "coredns"
-  addon_version     = "v1.8.7-eksbuild.1"  # Substitua pela versão mais recente disponível
-  resolve_conflicts = "OVERWRITE"
-}
-resource "aws_eks_addon" "kube_proxy" {
-  cluster_name      = aws_eks_cluster.auth_cloud_cluster.name
-  addon_name        = "kube-proxy"
-  addon_version     = "v1.21.2-eksbuild.2"  # Substitua pela versão mais recente disponível
-  resolve_conflicts = "OVERWRITE"
-}
-
-resource "aws_eks_addon" "alb_controller" {
-  cluster_name      = aws_eks_cluster.auth_cloud_cluster.name
-  addon_name        = "aws-load-balancer-controller"
-  addon_version     = "v2.2.3"  # Verifique pela versão mais recente disponível
-  resolve_conflicts = "OVERWRITE"
-}
-
-resource "aws_eks_addon" "metrics_server" {
-  cluster_name      = aws_eks_cluster.auth_cloud_cluster.name
-  addon_name        = "metrics-server"
-  addon_version     = "v0.4.2"  # Substitua pela versão mais recente disponível
-  resolve_conflicts = "OVERWRITE"
-}
-
 resource "aws_iam_openid_connect_provider" "default" {
   url             = aws_eks_cluster.auth_cloud_cluster.identity[0].oidc[0].issuer
   client_id_list  = ["sts.amazonaws.com"]
