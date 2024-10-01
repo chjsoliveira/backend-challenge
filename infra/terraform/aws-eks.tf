@@ -125,22 +125,7 @@ resource "aws_iam_role_policy_attachment" "eks_role_policy" {
   role       = aws_iam_role.eks_role.name
 }
 
-# Anexando políticas ao IAM Role dos Nodes do EKS
-resource "aws_iam_role_policy_attachment" "eks_node_role_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.eks_role.name
-}
 
-
-resource "aws_iam_role_policy_attachment" "ec2_ecr_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks_role.name
-}
-
-resource "aws_iam_role_policy_attachment" "cni_policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eks_role.name
-}
 
 
 # Criar node group 
