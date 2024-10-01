@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: "authcloud-service"
   namespace: "authcloud-api"
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
 spec:
   type: {{ .Values.service.type }}
   ports:

@@ -7,9 +7,8 @@ image:
 service:
   type: NodePort
   port: 80
-  nodePort: 30002
-  albarn: "arn:aws:elasticloadbalancing:us-east-1:097733790606:loadbalancer/app/authcloud-load-balancer/12414d25035e73e7"
-
+  nodePort: 30001
+  
 resources:
   requests:
     cpu: "256m"   # 0.25 vCPU
