@@ -3,7 +3,7 @@ name: 1-Feature
 on:
   push:
     branches:
-      - feat**
+      - feat**  # Aciona o workflow em branches que começam com "feat"
 
 jobs:
   build:
@@ -26,13 +26,16 @@ jobs:
       - name: Run tests and collect coverage
         run: dotnet test --configuration Release --collect:"XPlat Code Coverage" src/app/authcloud.csproj --no-build --verbosity normal
 
-      - name: Publish coverage results
+      - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
-        run: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Html
+
+      - name: Publish coverage results
+        run: reportgenerator -reports:$(pwd)/**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Html
         env:
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1 
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
       - name: Upload coverage results
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: coveragereport/          
+          path: coveragereport/
