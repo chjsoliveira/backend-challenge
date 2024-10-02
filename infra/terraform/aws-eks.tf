@@ -195,6 +195,7 @@ resource "aws_iam_openid_connect_provider" "default" {
 
 # Obter as instâncias do NodeGroup EKS
 data "aws_autoscaling_group" "eks_autosg" {
+  name = "eks_autosg"
   # O filtro aqui deve corresponder às tags ou propriedades do seu NodeGroup
   filter {
     name   = "tag:eks:nodegroup-name"
