@@ -22,7 +22,7 @@ resource "aws_security_group" "lb_security_group" {
     from_port                = 30001
     to_port                  = 30001
     protocol                 = "tcp"
-    destination_security_group_id = aws_security_group.eks_security_group.id  # Security Group dos nós do cluster
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
