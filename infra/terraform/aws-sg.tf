@@ -35,14 +35,6 @@ resource "aws_security_group" "eks_security_group" {
   name   = "eks-security-group"
   vpc_id = var.main_vpc
 
-  # Ingress: Permitir tráfego na porta 30001 vindo do Load Balancer
-  ingress {
-    from_port                = 30001
-    to_port                  = 30001
-    protocol                 = "tcp"
-    source_security_group_id = aws_security_group.lb_security_group.id  # Security Group do Load Balancer
-  }
-
   # Egress: Permitir todo o tráfego de saída
   egress {
     from_port   = 0
@@ -55,4 +47,16 @@ resource "aws_security_group" "eks_security_group" {
     Name = "eks-security-group"
   }
   
+}
+
+
+# Regra separada para permitir tráfego da security group do Load Balancer
+resource "aws_security_group_rule" "allow_lb_to_nodes" {
+  type                     = "ingress"
+  from_port                = 30001
+  to_port                  = 30001
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks_security_group.id   # Security Group dos Nós do Cluster
+  source_security_group_id = aws_security_group.lb_security_group.id    # Security Group do Load Balancer
+  description              = "Permitir tráfego na porta 30001 vindo do Load Balancer"
 }
