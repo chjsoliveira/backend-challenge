@@ -25,8 +25,11 @@ jobs:
         working-directory: src/app/
         run: dotnet build --configuration Release --no-restore
 
-      - name: Run tests and collect coverage
+      - name: Run unit tests and collect coverage
         run: dotnet test src/unit-tests/authcloud.UnitTests.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
+
+      - name: Run integration tests 
+        run: dotnet test src/integration/authcloud.Integration.csproj --configuration Release
 
       - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -35,12 +38,9 @@ jobs:
         run: reportgenerator -reports:./src/unit-tests/coverage/coverage.opencover.xml -targetdir:./docs/coverage_report -reporttypes:Html
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
-      - name: List project structure
-        run: find .
-
-      - name: Upload coverage results
-        uses: actions/upload-artifact@v4
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: coverage-report
-          path: ./docs/coverage_report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/coverage_report         
