@@ -187,8 +187,8 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
 
     ami_type       = "AL2_x86_64"  # AMI Amazon Linux 2 para x86_64
   instance_types = ["t3.medium"]  # Substitua pelo tipo de instância que deseja usar
-  capacity_type  = "ON_DEMAND"    # Tipo de capacidade (On-Demand, Spot)
-  disk_size      = 20             # Tamanho do disco em GB
+  capacity_type  = "SPOT"    # Tipo de capacidade (On-Demand, Spot)
+  disk_size      = 50             # Tamanho do disco em GB
 
   tags = {
     "Name"                               = "authcloud-node-group"
