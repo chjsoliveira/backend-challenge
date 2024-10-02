@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "authcloud_tg" {
   name        = "authcloud-target-group"
   port        = 30001                      # Porta NodePort configurada no EKS
   protocol    = "HTTP"
-  vpc_id      = var.vpc_id
+  vpc_id      = var.main_vpc
   target_type = "instance"                 # Aponta para as instâncias dos nós do cluster
 
   health_check {
