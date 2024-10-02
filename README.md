@@ -1,4 +1,4 @@
-﻿# AuthCloud
+﻿# AuthCloud .Net Core 8
 
 Este projeto contém a aplicação **authcloud**, focada em expor uma api web que recebe por parametros um JWT (string) e verifica se é valida conforme regras abaixo:
 
@@ -49,12 +49,22 @@ A API estará disponível em `http://localhost:5088`.
 
 Para detalhes sobre os endpoints da API, consulte o [README dos Endpoints](docs/endpoints.md).
 
-## Testes
+## Testes Unitários
 
 Para rodar os testes unitários:
 
 ```bash
 dotnet test src/unit-tests/authcloud.UnitTests.csproj
+```
+
+![Cobertura de Testes](docs/UnitTests.PNG)
+
+## Testes Integrados
+
+Para rodar os testes de integração:
+
+```bash
+dotnet test src/integration/authcloud.Integration.csproj
 ```
 
 ## Infraestrutura
@@ -65,11 +75,11 @@ dotnet test src/unit-tests/authcloud.UnitTests.csproj
 ## Estrutura de Pastas
 
 ```bash
-.
-¦
 +-- docs/                   # Documentação do projeto
 ¦   +-- Arquitetura.drawio   # Diagrama de arquitetura (editável)
 ¦   +-- Arquitetura.drawio.png  # Diagrama da arquitetura em formato PNG
+¦   +-- UnitTests.png         # Relatório de Testes em formato PNG
+¦   +-- endpoints.md         # Documentação dos endpoints da API
 ¦
 +-- infra/                  # Infraestrutura para deployment
 ¦   +-- helm-chart/         # Helm chart para Kubernetes
@@ -88,8 +98,15 @@ dotnet test src/unit-tests/authcloud.UnitTests.csproj
 ¦
 +-- src/                    # Código-fonte da aplicação authcloud
 ¦   +-- Dockerfile          # Definição do container Docker
-¦   +-- unit-tests/         # Testes unitários da aplicação
 ¦   +-- app/                # Aplicação principal
+¦   ¦   +-- Validators      # Validações da aplicação
+¦   ¦       +-- ClaimValidators/
+¦   +-- unit-tests/         # Testes unitários da aplicação
+¦   ¦   +-- Validators      # Testes para os validadores
+¦   ¦       +-- ClaimValidators/
+¦   ¦   +-- Controllers     # Testes para os controladores
+¦   ¦   +-- Service         # Testes para os serviços
+¦   +-- integration/        # Testes de integração
 
 ```
 

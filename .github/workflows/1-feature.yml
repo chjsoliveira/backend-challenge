@@ -3,14 +3,17 @@ name: 1-Feature
 on:
   push:
     branches:
-      - feat**
+      - feat**  # Aciona o workflow em branches que começam com "feat"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: true 
+          fetch-depth: 0   
 
       - name: Setup .NET 8 SDK
         uses: actions/setup-dotnet@v3
@@ -18,10 +21,43 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore src/app/authcloud.csproj
+        working-directory: src/app/
+        run: dotnet restore 
 
       - name: Build application
-        run: dotnet build src/app/authcloud.csproj --configuration Release --no-restore
+        working-directory: src/app/
+        run: dotnet build --configuration Release --no-restore
 
-      - name: Run unit tests
-        run: dotnet test src/app/authcloud.csproj --no-build --verbosity normal
+      - name: Run unit tests and collect coverage
+        run: dotnet test src/unit-tests/authcloud.UnitTests.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
+
+      - name: Run integration tests 
+        run: dotnet test src/integration/authcloud.Integration.csproj --configuration Release
+
+      - name: Install report generator tool
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+        
+      - name: Publish coverage results
+        run: reportgenerator -reports:./src/unit-tests/coverage/coverage.opencover.xml -targetdir:./docs/coverage_report -reporttypes:Html
+        env:
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.110.0'
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/coverage_report         

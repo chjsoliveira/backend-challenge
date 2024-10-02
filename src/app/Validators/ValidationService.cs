@@ -1,8 +1,9 @@
-﻿using System.Security.Claims;
+﻿using authcloud.Validators;
+using System.Security.Claims;
 
 namespace AuthCloud.Validators
 {
-    public class ValidationService
+    public class ValidationService : IValidationService
     {
         private readonly IEnumerable<IClaimValidator> _validators;
 

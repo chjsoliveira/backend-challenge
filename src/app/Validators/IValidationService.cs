@@ -1,10 +1,9 @@
 ﻿using System.Security.Claims;
 
-namespace AuthCloud.Validators
+namespace authcloud.Validators
 {
-    public interface IClaimValidator
+    public interface IValidationService
     {
         bool Validate(ClaimsPrincipal claims);
     }
 }
-

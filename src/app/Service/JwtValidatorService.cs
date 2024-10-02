@@ -1,16 +1,15 @@
-using AuthCloud.Validators;
-using AuthCloud.Validators;
-using Microsoft.IdentityModel.Tokens;
+using authcloud.Validators;
+using AuthCloud.Interface;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace AuthCloud.Service
 {
-    public class JwtValidatorService
+    public class JwtValidatorService : IJwtValidatorService
     {
-        private readonly ValidationService _validationService;
+        private readonly IValidationService _validationService;
 
-        public JwtValidatorService(ValidationService validationService)
+        public JwtValidatorService(IValidationService validationService)
         {
             _validationService = validationService;
         }
