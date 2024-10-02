@@ -194,15 +194,7 @@ resource "aws_iam_openid_connect_provider" "default" {
 }
 
 # Obter as instâncias do NodeGroup EKS
-data "aws_autoscaling_group" "eks_asg" {
-  filter {
-    name   = "tag:Name"
-    values = ["authcloud-node-group"]  # Nome do NodeGroup
-  }
-}
-
-# Obtenha as instâncias do Node Group usando o ASG
-data "aws_autoscaling_group" "eks_asg" {
+data "aws_autoscaling_group" "eks_autosg" {
   # O filtro aqui deve corresponder às tags ou propriedades do seu NodeGroup
   filter {
     name   = "tag:eks:nodegroup-name"
@@ -212,8 +204,8 @@ data "aws_autoscaling_group" "eks_asg" {
 
 # Registro das instâncias do NodeGroup no Target Group do ALB
 resource "aws_lb_target_group_attachment" "app_tg_attachment" {
-  count            = length(data.aws_autoscaling_group.eks_asg.instances)
+  count            = length(data.aws_autoscaling_group.eks_autosg.instances)
   target_group_arn = aws_lb_target_group.app_tg.arn
-  target_id        = data.aws_autoscaling_group.eks_asg.instances[count.index].id
+  target_id        = data.aws_autoscaling_group.eks_autosg.instances[count.index].id
   port             = 30001  # Porta NodePort no Kubernetes
 }
