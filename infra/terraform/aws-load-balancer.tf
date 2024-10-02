@@ -22,15 +22,29 @@ resource "aws_lb_target_group" "authcloud_tg" {
   vpc_id   = var.main_vpc
 
   health_check {
-    path                = "/"
+    path                = "/health"
+    port                = "30001" 
+    protocol            = "HTTP"
     interval            = 30
     timeout             = 5
     healthy_threshold  = 5
     unhealthy_threshold = 2
   }
-
+  target_type = "instance" 
   tags = {
     Name = "authcloud-target-group"
+  }
+}
+
+# Listener para redirecionar da porta 80 do ALB para a porta 8080 no Target Group
+resource "aws_lb_listener" "authcloud_listener80" {
+  load_balancer_arn = aws_lb.authcloud_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.authcloud_tg.arn
   }
 }
 

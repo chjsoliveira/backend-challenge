@@ -192,3 +192,19 @@ resource "aws_iam_openid_connect_provider" "default" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = ["9e99a48a9960b14926bb7f3b02e22da2b0ab7280"]
 }
+
+# Obter as instâncias do NodeGroup EKS
+data "aws_autoscaling_group" "eks_asg" {
+  filter {
+    name   = "tag:Name"
+    values = ["authcloud-node-group"]  # Nome do NodeGroup
+  }
+}
+
+# Registro das instâncias do NodeGroup no Target Group do ALB
+resource "aws_lb_target_group_attachment" "app_tg_attachment" {
+  count            = length(data.aws_autoscaling_group.eks_asg.instances)
+  target_group_arn = aws_lb_target_group.app_tg.arn
+  target_id        = data.aws_autoscaling_group.eks_asg.instances[count.index].id
+  port             = 30001  # Porta NodePort no Kubernetes
+}
