@@ -187,8 +187,8 @@ resource "aws_eks_node_group" "auth_cloud_node_group" {
 
     ami_type       = "AL2_x86_64"  # AMI Amazon Linux 2 para x86_64
   instance_types = ["t3.medium"]  # Substitua pelo tipo de instância que deseja usar
-  capacity_type  = "ON_DEMAND"    # Tipo de capacidade (On-Demand, Spot)
-  disk_size      = 20             # Tamanho do disco em GB
+  capacity_type  = "SPOT"    # Tipo de capacidade (On-Demand, Spot)
+  disk_size      = 50             # Tamanho do disco em GB
 
   tags = {
     "Name"                               = "authcloud-node-group"
@@ -206,11 +206,11 @@ resource "aws_iam_instance_profile" "eks_instance_profile" {
 # Criando um Fargate Profile para o EKS
 resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   cluster_name           = aws_eks_cluster.auth_cloud_cluster.name
-  fargate_profile_name   = "kube-system"
+  fargate_profile_name   = "auth_cloud_fargate_profile"
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "authcloud-api" 
+    namespace = "default" 
   }
 
   subnet_ids = [
