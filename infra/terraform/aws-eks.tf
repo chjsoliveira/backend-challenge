@@ -201,6 +201,15 @@ data "aws_autoscaling_group" "eks_asg" {
   }
 }
 
+# Obtenha as instâncias do Node Group usando o ASG
+data "aws_autoscaling_group" "eks_asg" {
+  # O filtro aqui deve corresponder às tags ou propriedades do seu NodeGroup
+  filter {
+    name   = "tag:eks:nodegroup-name"
+    values = [aws_eks_node_group.authcloud-node-group.node_group_name]
+  }
+}
+
 # Registro das instâncias do NodeGroup no Target Group do ALB
 resource "aws_lb_target_group_attachment" "app_tg_attachment" {
   count            = length(data.aws_autoscaling_group.eks_asg.instances)
