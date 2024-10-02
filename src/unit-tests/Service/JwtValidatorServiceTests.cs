@@ -1,14 +1,9 @@
 ﻿using authcloud.Validators;
 using AuthCloud.Service;
-using AuthCloud.Validators;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace authcloud.UnitTests.Service

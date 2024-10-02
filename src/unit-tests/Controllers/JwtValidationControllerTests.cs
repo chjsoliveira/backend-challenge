@@ -1,5 +1,4 @@
 using AuthCloud.Interface;
-using AuthCloud.Service;
 using AuthCloudApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

@@ -1,11 +1,7 @@
 ﻿using AuthCloud.Validators;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace authcloud.UnitTests.Validators
@@ -50,7 +46,7 @@ namespace authcloud.UnitTests.Validators
             var claimsPrincipal = new ClaimsPrincipal();
 
             _mockValidator1.Setup(v => v.Validate(claimsPrincipal)).Returns(true);
-            _mockValidator2.Setup(v => v.Validate(claimsPrincipal)).Returns(false); 
+            _mockValidator2.Setup(v => v.Validate(claimsPrincipal)).Returns(false);
 
             // Act
             var result = _validationService.Validate(claimsPrincipal);

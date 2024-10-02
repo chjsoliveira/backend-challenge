@@ -14,14 +14,14 @@ namespace AuthCloudApi.Tests.Integration
         public JwtValidationControllerIntegrationTests(CustomWebApplicationFactory<Program> factory)
         {
             _client = factory.WithWebHostBuilder(builder =>
-            {}).CreateClient();
+            { }).CreateClient();
         }
 
         [Fact]
         public async Task ValidateJwt_ValidToken_ReturnsOk()
         {
             // Arrange
-            var validToken = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJTZWVkIjoiNzg0MSIsIk5hbWUiOiJUb25pbmhvIEFyYXVqbyJ9.QY05sIjtrcJnP533kQNk8QXcaleJ1Q01jWY_ZzIZuAg"; 
+            var validToken = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJTZWVkIjoiNzg0MSIsIk5hbWUiOiJUb25pbmhvIEFyYXVqbyJ9.QY05sIjtrcJnP533kQNk8QXcaleJ1Q01jWY_ZzIZuAg";
 
             // Act
             var response = await _client.PostAsync(
@@ -39,7 +39,7 @@ namespace AuthCloudApi.Tests.Integration
         public async Task ValidateJwt_ValidToken_ReturnsNOk()
         {
             // Arrange
-            var invalidToken = "eyJhbGciOiJzI1NiJ9.dfsdfsfryJSr2xrIjoiQWRtaW4iLCJTZrkIjoiNzg0MSIsIk5hbrUiOiJUb25pbmhvIEFyYXVqbyJ9.QY05fsdfsIjtrcJnP533kQNk8QXcaleJ1Q01jWY_ZzIZuAg"; 
+            var invalidToken = "eyJhbGciOiJzI1NiJ9.dfsdfsfryJSr2xrIjoiQWRtaW4iLCJTZrkIjoiNzg0MSIsIk5hbrUiOiJUb25pbmhvIEFyYXVqbyJ9.QY05fsdfsIjtrcJnP533kQNk8QXcaleJ1Q01jWY_ZzIZuAg";
 
             // Act
             var response = await _client.PostAsync(
@@ -72,4 +72,3 @@ namespace AuthCloudApi.Tests.Integration
         }
     }
 }
-	

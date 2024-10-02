@@ -1,5 +1,4 @@
 ﻿using AuthCloud.Interface;
-using AuthCloud.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCloudApi.Controllers
@@ -19,10 +18,10 @@ namespace AuthCloudApi.Controllers
         public IActionResult ValidateJwt([FromBody] string token)
         {
             if (string.IsNullOrEmpty(token))
-                return BadRequest(false); 
+                return BadRequest(false);
 
             var isValid = _jwtValidatorService.ValidateJwt(token);
-            return Ok(isValid); 
+            return Ok(isValid);
         }
     }
 }

@@ -1,8 +1,5 @@
 using authcloud.Validators;
 using AuthCloud.Interface;
-using AuthCloud.Validators;
-using AuthCloud.Validators;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
