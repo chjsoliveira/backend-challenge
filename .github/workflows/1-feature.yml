@@ -8,9 +8,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}    
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: true 
+          fetch-depth: 0   
 
       - name: Setup .NET 8 SDK
         uses: actions/setup-dotnet@v3
@@ -38,9 +44,23 @@ jobs:
         run: reportgenerator -reports:./src/unit-tests/coverage/coverage.opencover.xml -targetdir:./docs/coverage_report -reporttypes:Html
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+
+      - uses: actions/checkout@v3
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.110.0'
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/coverage_report         
