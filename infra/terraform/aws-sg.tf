@@ -1,6 +1,6 @@
 resource "aws_security_group" "lb_security_group" {
   name   = "lb-security-group"
-  vpc_id = var.vpc_id
+  vpc_id = var.main_vpc
 
   # Ingress: Permitir tráfego HTTP/HTTPS de 0.0.0.0/0
   ingress {
@@ -33,7 +33,7 @@ resource "aws_security_group" "lb_security_group" {
 
 resource "aws_security_group" "eks_security_group" {
   name   = "eks-security-group"
-  vpc_id = var.vpc_id
+  vpc_id = var.main_vpc
 
   # Ingress: Permitir tráfego na porta 30001 vindo do Load Balancer
   ingress {
