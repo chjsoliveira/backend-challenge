@@ -11,6 +11,11 @@ builder.Services.AddScoped<IClaimValidator, JwtClaimsValidator>();
 builder.Services.AddScoped<IValidationService, ValidationService>();
 builder.Services.AddScoped<IJwtValidatorService, JwtValidatorService>();
 
+// Adicionar Health Checks
+builder.Services.AddHealthChecks(); // Registra os serviços de Health Checks
+
+// Configura o Swagger
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthCloud Validação Jwt", Version = "v1" });
@@ -26,13 +31,15 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthCloud Validação V1");
-    c.RoutePrefix = string.Empty;
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthCloud Validação Jwt V1");
+    c.RoutePrefix = "swagger"; // Mantenha como string.Empty para acessar na raiz
 });
 
-// app.UseAuthorization();
+app.UseRouting();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health"); 
 
 app.Run();
 
