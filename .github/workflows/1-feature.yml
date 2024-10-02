@@ -24,13 +24,13 @@ jobs:
         run: dotnet build src/app/authcloud.csproj --configuration Release --no-restore
 
       - name: Run tests and collect coverage
-        run: dotnet test --configuration Release --collect:"XPlat Code Coverage" src/app/authcloud.csproj --no-build --verbosity normal
+        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
 
       - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       - name: Publish coverage results
-        run: reportgenerator -reports:$(pwd)/**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Html
+        run: reportgenerator -reports:unit-tests/coverage/coverage.opencover.xml -targetdir:coverage_report -reporttypes:Html
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: docs/coverage/
+          path: coverage_report
