@@ -177,7 +177,7 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "kube-system" 
+    namespace = "authcloud-api" 
   }
 
   subnet_ids = [
@@ -193,20 +193,29 @@ resource "aws_iam_openid_connect_provider" "default" {
   thumbprint_list = ["9e99a48a9960b14926bb7f3b02e22da2b0ab7280"]
 }
 
-# Obter as instâncias do NodeGroup EKS
-data "aws_autoscaling_group" "eks_autosg" {
-  name = "eks_autosg"
-  # O filtro aqui deve corresponder às tags ou propriedades do seu NodeGroup
+# Data Source para obter informações sobre o Node Group
+data "aws_eks_node_group" "authcloud_node_group_data" {
+  cluster_name    = aws_eks_cluster.auth_cloud_cluster.name
+  node_group_name = aws_eks_node_group.auth_cloud_node_group.node_group_name
+}
+
+# Data Source para recuperar as instâncias em execução do Node Group
+data "aws_instances" "node_group_instances" {
   filter {
     name   = "tag:eks:nodegroup-name"
-    values = [aws_eks_node_group.authcloud-node-group.node_group_name]
+    values = [data.aws_eks_node_group.authcloud_node_group_data.node_group_name]
+  }
+
+  filter {
+    name   = "instance-state-name"
+    values = ["running"]  # Para filtrar apenas as instâncias em execução
   }
 }
 
 # Registro das instâncias do NodeGroup no Target Group do ALB
 resource "aws_lb_target_group_attachment" "app_tg_attachment" {
-  count            = length(data.aws_autoscaling_group.eks_autosg.instances)
+  count            = length(data.aws_instances.node_group_instances.ids)
   target_group_arn = aws_lb_target_group.app_tg.arn
-  target_id        = data.aws_autoscaling_group.eks_autosg.instances[count.index].id
+  target_id        = data.aws_instances.node_group_instances.ids[count.index]
   port             = 30001  # Porta NodePort no Kubernetes
 }
