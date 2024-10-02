@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Tests
 TestResult/
 coverage/
+coverage_report/
