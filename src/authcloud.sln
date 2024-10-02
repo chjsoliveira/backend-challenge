@@ -1,10 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "authcloud", "app\authcloud.csproj", "{B1D2A219-B88A-45E7-AB9D-BBECEBC12C5C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "authcloud.UnitTests", "unit-tests\authcloud.UnitTests.csproj", "{DA25C2E2-4DF7-45FB-AFBA-C64602C88705}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "authcloud.Integration", "integration\authcloud.Integration.csproj", "{CF4A2B82-A202-462A-8F15-A57121679D76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{DA25C2E2-4DF7-45FB-AFBA-C64602C88705}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA25C2E2-4DF7-45FB-AFBA-C64602C88705}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA25C2E2-4DF7-45FB-AFBA-C64602C88705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF4A2B82-A202-462A-8F15-A57121679D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4A2B82-A202-462A-8F15-A57121679D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4A2B82-A202-462A-8F15-A57121679D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4A2B82-A202-462A-8F15-A57121679D76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
