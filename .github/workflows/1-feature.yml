@@ -18,24 +18,29 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore src/app/authcloud.csproj
+        working-directory: src/app/
+        run: dotnet restore 
 
       - name: Build application
-        run: dotnet build src/app/authcloud.csproj --configuration Release --no-restore
+        working-directory: src/app/
+        run: dotnet build --configuration Release --no-restore
 
       - name: Run tests and collect coverage
+        working-directory: src/app/unit-tests/
         run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
 
       - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       - name: Publish coverage results
-        run: reportgenerator -reports:unit-tests/coverage/coverage.opencover.xml -targetdir:coverage_report -reporttypes:Html
+        working-directory: src/app/unit-tests/
+        run: reportgenerator -reports:coverage/coverage.opencover.xml -targetdir:coverage_report -reporttypes:Html
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
       - name: Upload coverage results
         uses: actions/upload-artifact@v4
+        working-directory: src/app/unit-tests/
         with:
           name: coverage-report
           path: coverage_report
