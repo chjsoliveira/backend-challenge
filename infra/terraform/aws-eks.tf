@@ -215,7 +215,7 @@ data "aws_instances" "node_group_instances" {
 # Registro das instâncias do NodeGroup no Target Group do ALB
 resource "aws_lb_target_group_attachment" "app_tg_attachment" {
   count            = length(data.aws_instances.node_group_instances.ids)
-  target_group_arn = aws_lb_target_group.app_tg.arn
+  target_group_arn = aws_lb_target_group.authcloud_tg.arn
   target_id        = data.aws_instances.node_group_instances.ids[count.index]
   port             = 30001  # Porta NodePort no Kubernetes
 }
