@@ -35,6 +35,14 @@ resource "aws_security_group" "eks_security_group" {
   name   = "eks-security-group"
   vpc_id = var.main_vpc
 
+  # Permitir tráfego de entrada de outros nós do EKS
+  ingress {
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["172.31.0.0/16"] 
+  }
+
   # Egress: Permitir todo o tráfego de saída
   egress {
     from_port   = 0
