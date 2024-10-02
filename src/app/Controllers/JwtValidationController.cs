@@ -1,4 +1,5 @@
-﻿using AuthCloud.Service;
+﻿using AuthCloud.Interface;
+using AuthCloud.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthCloudApi.Controllers
@@ -7,9 +8,9 @@ namespace AuthCloudApi.Controllers
     [Route("api/[controller]")]
     public class JwtValidationController : ControllerBase
     {
-        private readonly JwtValidatorService _jwtValidatorService;
+        private readonly IJwtValidatorService _jwtValidatorService;
 
-        public JwtValidationController(JwtValidatorService jwtValidatorService)
+        public JwtValidationController(IJwtValidatorService jwtValidatorService)
         {
             _jwtValidatorService = jwtValidatorService;
         }
