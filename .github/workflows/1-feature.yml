@@ -26,8 +26,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Run tests and collect coverage
-        working-directory: src/app/unit-tests/
-        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
+        run: dotnet test src/unit-tests/authcloud.UnitTests.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage/coverage.opencover.xml
 
       - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
