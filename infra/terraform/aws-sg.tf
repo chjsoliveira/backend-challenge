@@ -58,5 +58,5 @@ resource "aws_security_group_rule" "allow_lb_to_nodes" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.eks_security_group.id   # Security Group dos Nós do Cluster
   source_security_group_id = aws_security_group.lb_security_group.id    # Security Group do Load Balancer
-  description              = "Permitir tráfego na porta 30001 vindo do Load Balancer"
+  description              = "Permitir trafego na porta 30001 vindo do Load Balancer"
 }
