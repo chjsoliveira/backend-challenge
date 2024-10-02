@@ -30,11 +30,17 @@ jobs:
 
       - name: Install report generator tool
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
+        
+      - name: List project structure
+        run: find .
 
       - name: Publish coverage results
         run: reportgenerator -reports:coverage/coverage.opencover.xml -targetdir:coverage_report -reporttypes:Html
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+      - name: List project structure
+        run: find .
 
       - name: Upload coverage results
         uses: actions/upload-artifact@v4
