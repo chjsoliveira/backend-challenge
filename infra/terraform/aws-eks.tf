@@ -206,11 +206,11 @@ resource "aws_iam_instance_profile" "eks_instance_profile" {
 # Criando um Fargate Profile para o EKS
 resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   cluster_name           = aws_eks_cluster.auth_cloud_cluster.name
-  fargate_profile_name   = "kube-system"
+  fargate_profile_name   = "auth_cloud_fargate_profile"
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "authcloud-api" 
+    namespace = "default" 
   }
 
   subnet_ids = [

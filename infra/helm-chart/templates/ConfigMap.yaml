@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: aws-logging
-  namespace: authcloud-api  
+  namespace: "default"
 data:
   cluster-name: "authcloud"
   log-level: "info"

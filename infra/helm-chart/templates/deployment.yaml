@@ -1,14 +1,8 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: "authcloud-api"
----  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "authcloud-deployment"
-  namespace: "authcloud-api"
+  namespace: default 
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: "authcloud-service"
-  namespace: "authcloud-api"
+  namespace: "default" 
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "external"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
