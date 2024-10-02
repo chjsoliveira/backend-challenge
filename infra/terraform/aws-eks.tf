@@ -76,6 +76,36 @@ resource "aws_iam_role" "eks_node_role" {
   }
 }
 
+# Criando uma política IAM para o EKS
+resource "aws_iam_policy" "eks_node_custom_policy" {
+  name        = "EKSNodeCustomPolicy"
+  description = "Custom policy for EKS with necessary permissions."
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchGetImage"
+        ],
+        Resource = "*"
+      }, {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogStream",
+          "logs:CreateLogGroup",
+          "logs:PutLogEvents"
+        ],
+        "Resource": "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
+
 # Anexando políticas ao IAM Role dos Nodes do EKS
 resource "aws_iam_role_policy_attachment" "eks_node_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
@@ -91,7 +121,10 @@ resource "aws_iam_role_policy_attachment" "cni_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.eks_node_role.name
 }
-
+resource "aws_iam_role_policy_attachment" "eks_node_custom_policy_attachment" {
+  policy_arn = aws_iam_policy.eks_node_custom_policy.arn
+  role       = aws_iam_role.eks_node_role.name
+}
 
 # Criando uma política IAM para o EKS
 resource "aws_iam_policy" "eks_custom_policy" {
