@@ -177,7 +177,7 @@ resource "aws_eks_fargate_profile" "auth_cloud_fargate_profile" {
   pod_execution_role_arn = aws_iam_role.eks_role.arn
 
   selector {
-    namespace = "kube-system" 
+    namespace = "authcloud-api" 
   }
 
   subnet_ids = [
